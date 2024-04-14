@@ -2,7 +2,7 @@
 
 - name: Ensure unzip is installed.
   ansible.builtin.package:
-    name: ["unzip","bzip2"]
+    name: ["unzip", "bzip2"]
     state: present
 
 - name: Retrieve latest release information
@@ -39,7 +39,7 @@
     - not ansible_check_mode
     - restic_version_client_installed.stdout != restic_version
 
-- name: Decompress restic archive # noqa command-instead-of-shell
+- name: Decompress restic archive # noqa command-instead-of-shell no-changed-when
   ansible.builtin.shell: bzip2 -d /tmp/restic.bz2
   when:
     - not ansible_check_mode
