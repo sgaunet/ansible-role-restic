@@ -1,0 +1,6 @@
+---
+
+restic_version: "latest"
+restic_os: "linux"
+restic_arch: "amd64"
+restic_release: "https://github.com/restic/restic/releases/download/v{{ restic_version }}/restic_{{ restic_version }}_{{ restic_os }}_{{ restic_arch }}.bz2"

@@ -1,0 +1,74 @@
+---
+
+- name: Ensure unzip is installed.
+  ansible.builtin.package:
+    name: ["unzip","bzip2"]
+    state: present
+
+- name: Retrieve latest release information
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/restic/restic/releases/latest
+    return_content: true
+  register: project_info
+  changed_when: false
+  check_mode: false
+
+- name: Override version to setup if latest
+  ansible.builtin.set_fact:
+    restic_version: "{{ project_info.content | from_json | json_query('tag_name') | replace('v', '') }}"
+  changed_when: false
+  check_mode: false
+  when:
+    - restic_version == "latest"
+
+- name: Check restic version
+  become: false
+  ansible.builtin.shell: 'set -o pipefail && restic version | cut -f2 -d " "'
+  args:
+    executable: /bin/bash
+  register: restic_version_client_installed
+  changed_when: false
+  failed_when: false
+
+- name: Download restic
+  ansible.builtin.get_url:
+    url: "{{ restic_release }}"
+    dest: /tmp/restic.bz2
+    mode: '0750'
+  when:
+    - not ansible_check_mode
+    - restic_version_client_installed.stdout != restic_version
+
+- name: Decompress restic archive # noqa command-instead-of-shell
+  ansible.builtin.shell: bzip2 -d /tmp/restic.bz2
+  when:
+    - not ansible_check_mode
+    - restic_version_client_installed.stdout != restic_version
+
+- name: Install restic
+  ansible.builtin.copy:
+    src: /tmp/restic
+    dest: /usr/bin/restic
+    owner: root
+    group: root
+    mode: "0755"
+    remote_src: true
+  when:
+    - not ansible_check_mode
+    - restic_version_client_installed.stdout != restic_version
+
+- name: Delete temporary restic files
+  ansible.builtin.file:
+    path: /tmp/restic
+    state: absent
+  when:
+    - not ansible_check_mode
+    - restic_version_client_installed.stdout != restic_version
+
+- name: Delete temporary restic files
+  ansible.builtin.file:
+    path: /tmp/restic.bz2
+    state: absent
+  when:
+    - not ansible_check_mode
+    - restic_version_client_installed.stdout != restic_version

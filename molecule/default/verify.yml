@@ -1,0 +1,17 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Stat restic
+      ansible.builtin.stat:
+        path: /usr/local/bin/restic
+      register: restic_present
+    - name: Check restic is present
+      ansible.builtin.assert:
+        that:
+          - restic_present.stat.exists
+        fail_msg: "restic not setup"
+        success_msg: "restic is setup"
