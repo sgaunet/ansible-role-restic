@@ -7,7 +7,7 @@
   tasks:
     - name: Stat restic
       ansible.builtin.stat:
-        path: /usr/local/bin/restic
+        path: /usr/bin/restic
       register: restic_present
     - name: Check restic is present
       ansible.builtin.assert:
