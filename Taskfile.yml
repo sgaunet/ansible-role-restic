@@ -28,3 +28,12 @@ tasks:
       - source venv/bin/activate && molecule destroy
       - source venv/bin/activate && molecule converge
       - source venv/bin/activate && molecule converge
+
+  test-ubuntu2204:
+    desc: "execute molecule tests on ubuntu2204"
+    env:
+      MOLECULE_DISTRO: ubuntu2204
+    cmds:
+      - source venv/bin/activate && molecule destroy
+      - source venv/bin/activate && molecule converge
+      - source venv/bin/activate && molecule converge
