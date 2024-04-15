@@ -10,6 +10,9 @@
 - name: Retrieve latest release information
   ansible.builtin.uri:
     url: https://api.github.com/repos/restic/restic/releases/latest
+    headers:
+      Authorization: "Bearer {{ lookup('env', 'GITHUB_TOKEN') }}"
+      X-GitHub-Api-Version: "2022-11-28"
     return_content: true
   register: project_info
   changed_when: false
