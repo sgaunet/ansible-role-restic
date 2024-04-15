@@ -1,8 +1,8 @@
 # Ansible Role: restic
 
-[![CI](https://github.com/sgaunet/ansible-role-restic/workflows/CI/badge.svg?event=push)](https://github.com/sgaunet/ansible-role-restic/actions?query=workflow%3ACI)
+[![CI](https://github.com/sgaunet/ansible-role-restic/workflows/CI/badge.svg)](https://github.com/sgaunet/ansible-role-restic/actions?query=workflow%3ACI)
 
-An Ansible Role that installs [restic][https://github.com/sgaunet/restic] on Linux.
+An Ansible Role that installs [restic](https://github.com/sgaunet/restic) on Linux.
 
 ## Requirements
 
