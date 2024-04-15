@@ -66,6 +66,7 @@ jobs:
           # molecule destroy
           molecule test
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
