@@ -4,6 +4,8 @@
   ansible.builtin.package:
     name: ["unzip", "bzip2"]
     state: present
+  # only for redhat distribution
+  when: ansible_os_family == 'RedHat'
 
 - name: Retrieve latest release information
   ansible.builtin.uri:
