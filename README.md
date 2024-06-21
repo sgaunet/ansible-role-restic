@@ -1,3 +1,5 @@
+This role is **obsolete**, please, [use this role instead.](https://github.com/sgaunet/ansible-role-gh-release-installer/blob/main/docs/available_tools.md#restic)
+
 # Ansible Role: restic
 
 [![CI](https://github.com/sgaunet/ansible-role-restic/workflows/CI/badge.svg)](https://github.com/sgaunet/ansible-role-restic/actions?query=workflow%3ACI)
